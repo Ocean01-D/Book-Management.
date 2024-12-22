@@ -1,0 +1,96 @@
+<%- include('../partials/header') %>
+
+<main>
+  <div class="container">
+      <!-- Book Details Section -->
+      <div>
+      <div class="book-details">
+          <div class="picture">
+              <img src="<%= book.picture %>" alt="picure" width="200px" height="300px">
+          </div>
+          <button>Borrow</button>
+      </div>
+  </div>
+
+  <div>
+      <div class="book-details">
+          <div class="book-cover">
+          <div class="book-info">
+              <h1><%= book.title %></h1>
+              <p class="author">Author:</strong> <%= book.author %></a></p>
+              <p class="description"><strong>Description:</strong> <%= book.description || 'N/A' %></p>
+              <div class="book-meta">
+                  <span><strong>Publish Date:</strong><%= book.publishDate.toISOString().split('T')[0] %></span>
+                  <span><strong>Publisher:</strong><%= book.publisher %></span>
+                  <span><strong>Language:</strong> <%= book.language %></span>
+                  <span><strong>Pages:</strong> <%= book.pageCount %></span>
+              </div>
+          </div>
+          </div>
+      </div>
+      
+
+      <!-- Reader comments -->
+      <div class="reviews">
+        <h2>Reader Comments</h2>
+
+        <!-- Form nhập comment -->
+        <form action="/books/<%= book._id %>/comments" method="POST" class="comment-form">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <textarea name="content" placeholder="Your Comment (max 200 characters)" maxlength="200" required></textarea>
+            <button type="submit">Post Comment</button>
+        </form>
+
+        <!-- Hiển thị comment -->
+        <% if (book.comments.length) { %>
+            <div class="comment-list">
+                <% book.comments.forEach(comment => { %>
+                    <div class="review">
+                        <p><strong>By <%= comment.name %></strong></p>
+                        <p><%= comment.content %></p>
+                        <p class="review-date"><%= new Date(comment.date).toLocaleString() %></p>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p>No comments yet. Be the first to comment!</p>
+        <% } %>
+      </div>
+  </div>    
+  </div>
+</main>
+
+
+
+
+
+
+
+
+
+<!--<main>
+  <h2><%= book.title %></h2>
+  <p><strong>Author:</strong> <%= book.author %></p>
+  <p><strong>Description:</strong> <%= book.description || 'N/A' %></p>
+  <p><strong>Views:</strong> <%= book.viewCount %></p>
+
+  <-- Insert your code here 
+
+  <section>
+    <h3>Reader Comments</h3>
+    <% if (book.comments.length) { %>
+      <ul>
+        <% book.comments.forEach(comment => { %>
+          <li>
+            <strong><%= comment.name %></strong>: <%= comment.content %>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No comments yet.</p>
+    <% } %>
+  </section>
+</main>
+
+-->
+<%- include('../partials/footer') %>

@@ -1,0 +1,36 @@
+<%- include('../partials/header') %>
+<main>
+  <h2>Books in Library</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>Published</th>
+        <th>Views</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% books.forEach(book => { %>
+      <tr>
+        <td><%= book.title %></td>
+        <td><%= book.author %></td>
+        <td><%= book.genre || 'N/A' %></td>
+        <td><%= book.publishDate.toISOString().split('T')[0] %></td>  <!-- fix code here -->
+        <td><%= book.viewCount %></td>
+        <td>
+          <a href="/books/<%= book._id %>">View Details</a>
+          <a href="/books/edit/<%= book._id %>">Edit</a>
+          <form method="POST" action="/books/<%= book._id %>?_method=DELETE" style="display:inline;">
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <a href="/books/add">Add New Book</a>
+</main>
+<%- include('../partials/footer') %>
